@@ -1,7 +1,15 @@
-def mark_maintenance(node_name, from_time, to_time):
-    ####
+from log import set_node_status, get_node_status
+from status import ping, get_status
 
-def remove_maintenance(node_name):
+maintaince_msg = "🛠️ Maintenance"
 
-def is_under_maintenance(node_name, current_time):
+def mark_maintenance(node_name, until_time = None):
+    set_node_status(node_name, "🛠️ Maintenance", until_time)
     
+def remove_maintenance(node_name):
+    res = ping(node_name)
+
+    set_node_status(node_name, get_status(res))
+    
+def is_under_maintenance(node_name):
+    return get_node_status(node_name) == "🛠️ Maintenance"

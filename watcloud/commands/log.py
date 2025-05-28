@@ -45,10 +45,14 @@ def get_node_status(node_name):
 # Set or update the status of a specific node
 def set_node_status(node_name, status, note=None):
     log_data = load_log()
-    log_data[node_name] = {'status': status}
-    if note:
-        log_data[node_name]['note'] = note
-    save_log(log_data)
+
+    try:
+        log_data[node_name] = {'status': status}
+        if note:
+            log_data[node_name]['note'] = note
+        save_log(log_data)
+    except KeyError:
+       print(f"Key '{node_name}' not found in log.json.")
 
 # Optionally remove a node from the log
 def remove_node(node_name):

@@ -1,10 +1,5 @@
-# import requests
-# from bs4 import BeautifulSoup
 import subprocess
-import os
-import platform
-import re
-from log import node_exists, add_node
+from log import node_exists, add_node, get_node_status
 
 def nodes_status(nodes): 
     '''Pings all possible nodes and returns 1 if the node is online, and 0 otherwise'''
@@ -55,24 +50,8 @@ def get_cluster_status():
         if not node_exists(nodes[i]):
             add_node(nodes[i], get_status(nodes_status[i]))
         
-        print(f"- {nodes[i]}: {get_status(nodes_status[i])}")
+        print(f"- {nodes[i]}: {get_cluster_status(nodes[i])}")
      
-
-
-# Retriving the nodes from  (never run, just commented out for future development)
-# url = 'https://cloud.watonomous.ca/machines'
-# response = requests.get(url)
-# soup = BeautifulSoup(response.text, 'html.parser')
-
-# # Find the first h1 element
-# li_element = soup.findAll('li')
-
-# hosts = []
-
-# for li in li_element:
-#     text = li.get_text()
-#     if not(re.search("watonomous.ca", text) == "None"):
-#         hosts.append(text)
 
 # Retriving nodes manually 
 nodes = ["delta-ubuntu2.ext.watonomous.ca", "delta-ubuntu2.cluster.watonomous.ca",
