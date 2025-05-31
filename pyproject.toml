@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["watcloud"]
+
+[project]
+name = "watcloud"
+version = "0.1"
+description = "CLI tool for quota and cluster info and daemon"
+
+[project.scripts]
+watcloud = "watcloud.cli:main"

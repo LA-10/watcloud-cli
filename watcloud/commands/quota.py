@@ -1,48 +1,70 @@
-from datetime import datetime, timedelta, date
+import json
 import shutil
-import os
+import subprocess
+import psutil
 
 # Configuration
-DEFAULT_LIMIT_GI = 10  # Default quota limit in GiB (Placeholder for now)
-SOFT_THRESHOLD = 15    # in GiB (Placeholder for now)
-HARD_THRESHOLD = 30    # in GiB (Placeholder for now)
+DEFAULT_LIMIT_GI = 20  # Default quota limit in GiB
+DUE_DATE_FILE_NAME = "soft_threshold_due.txt"
+DATA_DIR = "watcloud/data"
 
-DUE_DATE_FILE = "watcloud/data/soft_threshold_due.txt"
+with open('watcloud/data/cluster_info.json') as f:
+    data = json.load(f)
 
-def check_quota(directory, limit_gi=DEFAULT_LIMIT_GI):
-    """Check if the disk usage of a directory exceeds the quota."""
-    total, used, free = shutil.disk_usage(directory)
-    used_gi = used / (1024 ** 3)  # Convert bytes to GiB
+def check_disk_usage(path="/"):
+    """Check disk usage for the given path (default root)."""
+    total, used, free = shutil.disk_usage(path)
+    usage_percent = used / total * 100
+    return {
+        "total_gb": total / (1024**3),
+        "used_gb": used / (1024**3),
+        "free_gb": free / (1024**3),
+        "usage_percent": usage_percent
+    }
 
-    print(f"\nChecking quota for: {directory}")
-    print(f"Used: {used_gi:.2f} GiB / Limit: {limit_gi:.2f} GiB")
+def check_cpu_usage(interval=1):
+    """
+    Check CPU usage percentage over the given interval (seconds).
+    """
+    usage_percent = psutil.cpu_percent(interval=interval)
+    return usage_percent
 
-    if used_gi > HARD_THRESHOLD:
-        print(f"❌ CRITICAL: Quota of {HARD_THRESHOLD} GiB exceeded!")
-        raise Exception("disk quota exceeded")
-
-    elif used_gi > SOFT_THRESHOLD:
-        print(f"⚠️  WARNING: Soft threshold of {SOFT_THRESHOLD} GiB reached.")
-
-        if not os.path.exists(DUE_DATE_FILE):
-            due_date = (date.today() + timedelta(days=7)).strftime("%Y-%m-%d")
-            with open(DUE_DATE_FILE, "w") as f:
-                f.write(due_date)
-            return "warning"
-
-        else:
-            with open(DUE_DATE_FILE, "r") as f:
-                due_date_str = f.readline().strip()
-                due_date = datetime.strptime(due_date_str, "%Y-%m-%d")
-                if date.today() >= due_date.date():
-                    raise Exception("disk quota exceeded")
-
-
-    else:
-        print("✅ Quota within safe limits.")
-        if os.path.exists(DUE_DATE_FILE):
-            os.remove(DUE_DATE_FILE)  # Reset if usage is back to safe
-        return "ok"
+def check_memory_usage():
+    """Check system memory usage."""
+    mem = psutil.virtual_memory()
+    return {
+        "total_gb": mem.total / (1024**3),
+        "used_gb": mem.used / (1024**3),
+        "free_gb": mem.available / (1024**3),
+        "usage_percent": mem.percent
+    }
 
 
+def list_quota_usage():
+    nodes = (
+          data["cluster"]["compute_nodes"]
+        + data["cluster"]["login_nodes"]
+        + data["cluster"]["General-Use Machines (Legacy)"]
+    )
 
+    print(f"{'Node':<20} {'Disk':<10} {'Used (GiB)':<12} {'Soft Limit':<12} {'Hard Limit':<12}")
+    print("-" * 70)
+
+    for node in nodes:
+        node_name = node["name"]
+        disks = node.get("specs", {}).get("quota", {}).get("node-local_disk", [])
+
+        for disk in disks:
+            disk_name = disk.get("name", "unknown")
+
+            soft_limit = next((limit["size"] for limit in disk.get("size_limit", []) if limit["name"] == "soft"), "N/A")
+            hard_limit = next((limit["size"] for limit in disk.get("size_limit", []) if limit["name"] == "hard"), "N/A")
+
+            try:
+                total, used, _ = shutil.disk_usage(node_name)
+                used_gib = used / (1024 ** 3)
+                used_str = f"{used_gib:.2f}"
+            except Exception:
+                used_str = "N/A"
+
+            print(f"{node_name:<20} {disk_name:<10} {used_str:<12} {soft_limit:<12} {hard_limit:<12}")

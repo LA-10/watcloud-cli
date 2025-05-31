@@ -1,0 +1,4 @@
+Metadata-Version: 2.1
+Name: watcloud
+Version: 0.1
+Summary: CLI tool for quota and cluster info and daemon

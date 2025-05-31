@@ -2,7 +2,7 @@ import json
 import os
 
 # Path to the log file
-LOG_PATH = os.path.join(os.path.dirname(__file__), 'watcloud/data/log.json')
+LOG_PATH = "watcloud/data/log.json"
 
 # Load the log file into a dictionary
 def load_log():
@@ -16,12 +16,14 @@ def load_log():
 
 # Save the log dictionary to the file
 def save_log(log_data):
+    print(log_data)
     with open(LOG_PATH, 'w') as f:
         json.dump(log_data, f, indent=2)
 
 # Add a new node with default status if it doesn't exist
 def add_node(node_name, status="unknown", note=None):
     log_data = load_log()
+
     if node_name not in log_data:
         log_data[node_name] = {'status': status}
         if note:
@@ -38,7 +40,7 @@ def node_exists(node_name):
 def get_node_status(node_name):
     log_data = load_log()
     entry = log_data.get(node_name)
-    if entry:
+    if entry is not None:
         return entry.get('status', 'unknown')
     return 'unknown'
 

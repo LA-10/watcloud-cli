@@ -1,18 +1,19 @@
+import shutil
 import subprocess
-from log import node_exists, add_node, get_node_status
+from .quota import data
 
 def nodes_status(nodes): 
     '''Pings all possible nodes and returns 1 if the node is online, and 0 otherwise'''
-    nodes_status = []
+    nodes_stat = []
 
     for node in nodes:
         res = ping(node)
 
-        nodes_status.append(res)
+        nodes_stat.append(res)
 
 
 
-    return nodes_status
+    return nodes_stat
     
 
 def ping(host):
@@ -36,33 +37,51 @@ def get_status(status):
     else:
         return "❌ Offline"
 
+
 def get_cluster_status():
-    '''Displays the summary of the staus of all subproccesses'''
+    '''Displays the summary of the status of all subprocesses'''
+    from .maintaince import is_under_maintenance
 
-    nodes_status = nodes_status(nodes)
+    terminal_width = shutil.get_terminal_size().columns
+    clusters = ["compute_nodes", "login_nodes", "General-Use Machines (Legacy)"]
 
-    print(f"Cluster Status:\n")
+    # Define fixed column widths
+    name_width = 15
+    hostname_width = 30
+    status_width = 20
 
-    print("\nNodes:")
+    total_width = name_width + hostname_width + status_width + 6  
+    spacer = " " * 2
 
-    for i in range(len(nodes)):
+    for cluster in clusters:
+        title = f"{cluster} Cluster Status:"
+        print("\n" + title.center(total_width) + "\n")
 
-        if not node_exists(nodes[i]):
-            add_node(nodes[i], get_status(nodes_status[i]))
-        
-        print(f"- {nodes[i]}: {get_cluster_status(nodes[i])}")
-     
+        # Header
+        header = (
+            f"{'Node'.center(name_width)}{spacer}"
+            f"{'Hostname'.center(hostname_width)}{spacer}"
+            f"{'Status'.center(status_width)}"
+        )
+        print(header)
+        print("-" * total_width)
 
-# Retriving nodes manually 
-nodes = ["delta-ubuntu2.ext.watonomous.ca", "delta-ubuntu2.cluster.watonomous.ca",
-          "tr-ubuntu3.cluster.watonomous.ca", "tr-ubuntu3.ts.watonomous.ca",
-          "derek3-ubuntu2.cluster.watonomous.ca", "derek3-ubuntu2.ts.watonomous.ca",
-          "bastion.cluster.watonomous.ca", "bastion.watonomous.ca",
-          "wato-login1.ext.watonomous.ca", "wato-login1.cluster.watonomous.ca", "wato-login1.ts.watonomous.ca",
-          "wato-login2.ext.watonomous.ca", "wato-login2.cluster.watonomous.ca", "wato-login2.ts.watonomous.ca",
-          "trpro-slurm2.cluster.watonomous.ca", "trpro-slurm2.ts.watonomous.ca", 
-          "wato2-slurm1.cluster.watonomous.ca", "wato2-slurm1.ts.watonomous.ca",
-          "trpro-slurm1.cluster.watonomous.ca", "trpro-slurm1.ts.watonomous.ca",
-          "tr-slurm2.cluster.watonomous.ca", "tr-slurm2.ts.watonomous.ca",
-          "thor-slurm1.cluster.watonomous.ca", "thor-slurm1.ts.watonomous.ca"]
+        nodes = data["cluster"].get(cluster, [])
 
+        for node in nodes:
+            name = node["name"]
+            hostnames = node.get("hostnames", [])
+
+            for hostname in hostnames:
+                if is_under_maintenance(name):
+                    status = "🛠️ Maintenance"
+                else:
+                    is_running = ping(hostname)
+                    status = get_status(is_running)
+
+                row = (
+                    f"{name.center(name_width)}{spacer}"
+                    f"{hostname.center(hostname_width)}{spacer}"
+                    f"{status.center(status_width)}"
+                )
+                print(row)

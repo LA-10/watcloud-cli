@@ -1,0 +1,10 @@
+README.md
+pyproject.toml
+watcloud/__init__.py
+watcloud/__main__.py
+watcloud/cli.py
+watcloud.egg-info/PKG-INFO
+watcloud.egg-info/SOURCES.txt
+watcloud.egg-info/dependency_links.txt
+watcloud.egg-info/entry_points.txt
+watcloud.egg-info/top_level.txt

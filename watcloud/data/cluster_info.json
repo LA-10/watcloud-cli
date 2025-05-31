@@ -1,0 +1,397 @@
+{
+    "cluster": {
+        "compute_nodes": [
+            {
+                "name": "trpro-slurm1",
+                "hostnames": [
+                    "trpro-slurm1.cluster.watonomous.ca",
+                    "trpro-slurm1.ts.watonomous.ca"
+                ],
+                "os": "Ubuntu 22.04.4 LTS",
+                "cpu": "AMD Ryzen Threadripper PRO 3995WX 64-Cores",
+                "logical_processors": 100,
+                "ram_gib": 413,
+                "gpus": [
+                    {
+                        "model": "NVIDIA GeForce RTX 3090",
+                        "vram_mib": 24576
+                    },
+                    {
+                        "model": "NVIDIA GeForce RTX 3090",
+                        "vram_mib": 24576
+                    },
+                    {
+                        "model": "NVIDIA GeForce RTX 3090",
+                        "vram_mib": 24576
+                    },
+                    {
+                        "model": "NVIDIA GeForce RTX 3090",
+                        "vram_mib": 24576
+                    }
+                ]
+            },
+            {
+                "name": "tr-slurm2",
+                "hostnames": [
+                    "tr-slurm2.cluster.watonomous.ca",
+                    "tr-slurm2.ts.watonomous.ca"
+                ],
+                "os": "Ubuntu 22.04.5 LTS",
+                "cpu": "AMD Ryzen Threadripper 3970X 32-Core Processor",
+                "logical_processors": 60,
+                "ram_gib": 55,
+                "gpus": [
+                    {
+                        "model": "NVIDIA GeForce GTX 1080",
+                        "vram_mib": 8192
+                    },
+                    {
+                        "model": "NVIDIA GeForce GTX 1080",
+                        "vram_mib": 8192
+                    }
+                ]
+            },
+            {
+                "name": "thor-slurm1",
+                "hostnames": [
+                    "thor-slurm1.cluster.watonomous.ca",
+                    "thor-slurm1.ts.watonomous.ca"
+                ],
+                "os": "Ubuntu 22.04.4 LTS",
+                "cpu": "AMD Ryzen Threadripper 3970X 32-Core Processor",
+                "logical_processors": 54,
+                "ram_gib": 189,
+                "gpus": [
+                    {
+                        "model": "NVIDIA GeForce RTX 3090",
+                        "vram_mib": 24576
+                    },
+                    {
+                        "model": "NVIDIA GeForce RTX 3090",
+                        "vram_mib": 24576
+                    }
+                ]
+            },
+            {
+                "name": "trpro-slurm2",
+                "hostnames": [
+                    "trpro-slurm2.cluster.watonomous.ca",
+                    "trpro-slurm2.ts.watonomous.ca"
+                ],
+                "os": "Ubuntu 22.04.4 LTS",
+                "cpu": "AMD Ryzen Threadripper PRO 3995WX 64-Cores",
+                "logical_processors": 20,
+                "ram_gib": 31,
+                "gpus": [
+                    {
+                        "model": "NVIDIA GeForce RTX 4090",
+                        "vram_mib": 24564
+                    },
+                    {
+                        "model": "NVIDIA GeForce RTX 4090",
+                        "vram_mib": 24564
+                    }
+                ]
+            },
+            {
+                "name": "wato2-slurm1",
+                "hostnames": [
+                    "wato2-slurm1.cluster.watonomous.ca",
+                    "wato2-slurm1.ts.watonomous.ca"
+                ],
+                "os": "Ubuntu 22.04.4 LTS",
+                "cpu": "Intel(R) Core(TM) i7-7700K CPU @ 4.20GHz",
+                "logical_processors": 6,
+                "ram_gib": 20,
+                "gpus": [
+                    {
+                        "model": "NVIDIA GeForce RTX 2080 Ti",
+                        "vram_mib": 11264
+                    }
+                ]
+            }
+        ],
+        "login_nodes": [
+            {
+                "name": "wato-login1",
+                "hostnames": [
+                    "wato-login1.ext.watonomous.ca",
+                    "wato-login1.cluster.watonomous.ca",
+                    "wato-login1.ts.watonomous.ca"
+                ],
+                "os": "Ubuntu 22.04.5 LTS",
+                "cpu": "Common KVM processor",
+                "logical_processors": 2,
+                "ram_gib": 4,
+                "ssh_host_keys": [
+                    "ssh-dss AAAAB3NzaC1kc3MAAACBALHYg+q9Z/sC5lyjm/VSoIdvP72+qCw2NQOjvwRl5eksOQO1IiVcJ6adAPCVg/0zBq/dNmw1wbY1+e6b7B6WSWafJXkd6+6U8F3xmX6stpAzdeEzImhVQ+Yw4cvHjWvJ8RuVGgU8torWe+bQ9DpQW56V/OncnY7NPQ4VO0QCMMqJAAAAFQDdG2SKShcwBJll9JvcNRQQhrVsyQAAAIBzgZdZZ5IqWj0wiJUtCw+rtsba9mJqZQwt7eEcZmwFdilP9JYtn2zc7YPwFKrfBuFADZz2Nitznczw33EyAQqj6OrPt5bmGc7tJjhdtTXtWp4Zx/slHdvX/DTBSqoe5IrL9vQAcZRofANRxoQpaJpk78ODK1xo4iM4TDZYGqSaJAAAAIAFOEZW+luAMRLoC4bg+5Zrz3qPKT/bh5hMXpQq7k0hwgaufx/zN7chZ6K93poosld0dOI2QXotTKPCi/tlw4cE5wRtTq+WuYsXQXKsiZmGTvLDQ7WBKwQVfozSP1hOcQoa7vSVeJWginS7tWljl0ly+0QlJbjqxX8JNz2cMho1AA==",
+                    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDVf1CnEYfFotn87sm/788w3fC63gyFu+9xAS5ObFQA6JBleteJzSL56epshVkDZ9tnidPSFmzA7g9d+XlDsqXw=",
+                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIbkEq4et5qd+mQIfzvLJ4Y/Eic6q1PGAMd2Qt0DotoG",
+                    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDPEErXLa7w4MZ3zreIgV9MSjMvhMCUkMOIf6DcmqgWE5EGBT6K/ujj7l1juP7F0vNBB2p+VNULeLYv9ZvFVfXx1ZFYiHVpPp5RaxCrN+66YKX8rfbFO5k4yk0x+XVdQNAciiAhP9DgBtcBpip0uFH6GFdLF32yJo+TOzHdKlb/8fnGQYVOGadh9qUUcgK44MHLqrOn0XBwNF1QlcSseeyhQPPzTRTZ73/tvXf3CO/wgXwTGMv+7/gsfMHEQA4SCgofwVH7+vreoT0U6nFW/Rv5Gkh7L09TnWWwgJHKNG9V5bFsGTmIOOkQ1TyVVFfnWfNGF+JDdBThwN++FwWTyBevxBcCS/utrehNpWcRNdZVyEB/+MYJNLKACawu6C8TNzfOoGq/jxPMIKduauQ/6XSpv9NS0h9VLUbA1JCaBcp+FdIlNAJcPm7saWu87DaweMD/cO+3ZA4Ijwn4T5oMzY0AGEHud1nqITIrgvpD6vqhxJqEaT/SWlKjnILgm3Zlr+yDFkm8uamhq1DNRu1Kj+jY1jDaku88Vs2zS18010s+4Qx+hytynFL+8gu4fmYVB4Ez2bF+9P7BRn3xgZF37cU/joHzhH8pBkNq0ux/7aDWwVx8uOnCpzPfiEpRy5+SCxugrOW+g7yKlwVakVns2YqDFCP/CBxEHcw83yt01Y5NQw=="
+                ]
+            },
+            {
+                "name": "wato-login2",
+                "hostnames": [
+                    "wato-login2.ext.watonomous.ca",
+                    "wato-login2.cluster.watonomous.ca",
+                    "wato-login2.ts.watonomous.ca"
+                ],
+                "os": "Ubuntu 22.04.5 LTS",
+                "cpu": "Common KVM processor",
+                "logical_processors": 2,
+                "ram_gib": 4,
+                "ssh_host_keys": [
+                    "ssh-dss AAAAB3NzaC1kc3MAAACBAIpENZV9L487ZUYnbByWpMmz3ZprqYpgy9Yu1RdqdJoWFoXeWKtP+w/ADVBZY0MiSgbaGhdiwqXsKvTkSIstJw+/DHCMFopbG7Jxb06Bs9hT6H7hRErC76L2XIPIDxH0KF7Ukz/YsWCCozqQios1L6qJoj9LLoTP+JTurC2wl6rJAAAAFQCe2aOb07L4Ylt9d8T+e3d3PCiFKQAAAIBGJsWRMCBKQ7sdTFFlAAkifAPdepkFUNgaD+Tj2flLe+54bI2sC0f5dP+CHP7NTB48go6LdMJ1Q1NDEDDcI3pN6X138eIRmBeV3LVCZxxGZCIp7tb68CXlmWhNwk80A0HwnyRPv8t8nIYeiy+FNHOSudKG8WKK0jLEUKlLmhPnMwAAAIAgsLtHVSL/qZA25wIVfDNRjwIdTgjmDf37JI0NE1YBZXFrMui3yFNLx2DhbMHb77bBUkZFA8H9TkF3hKPPaQC7XqKzabQljzlme+enhtM3eQDUAW+gVnihWmeLxQqbB2WvkfE9nQbUBaYxiFNgo4/+KoFy5QGlJj1Cn/wuF8gk0w==",
+                    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEgeIcYHV95poNje9aiC4fFSM32CMsg+X9uICTpd9MhTj6uxP6YkpgioO6H71Ra/06eYyyCKi4ptPIUflvqiZiY=",
+                    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILKBKXbjZrqOPjFKt0ukMzMeuFucK4vsk29N7LFElo0n",
+                    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDC3JVlUdj4Cf06lf+IvRbNV6LpZpEzSHvv6LY9Zh4o/gZIxI4R7FECWK63QSvUohhx0h2z4OVOQ0p2maTy1KOJaeKY8FQ2tIDDm7fgjrWYxDNNk5XFAvkT+m3eURI62Wt/mkwkB8OSbGT34L4ZDnezM19I4FTj3N8KFZaaZJE9xoLahbXckCJiHq5neyvmfGB+IN//3om8HLx8K5v1V2F1IKhBWtd39c6bnLmdfF/BQ0yfCmKq2wnv3IANz6iPiLACh1BeU8ccqvQm2DlwC/37j96xdW6aRUo5LfNDUzAaL5J8uC0Nki4LrTb18S3wkqX52T3SxV/FNdFGGBQA41cm+sUKDikbAwmfsxVwBKa1gbwfQZpIPGeMRkyVOx10l8C5k8IkOwL3fDO4dKbdmrY0KUvIiTxZHWxAyFcTlyD2XROxVTpAiikcBzC1uH5AlI5e7tTsxy9RhKcdBcIMlwYPFqYyG8DPjLfkSiHW1jDKKvBhVhoh9IXxiBXRVx04oHuTZ8U5pRWPvzDhOpFFg3jFn23/HmYRSYotMePLWSFO26epbByMukJlAEKWbN4+vgWMspKPscycR+lr2jwLDxOPfCOnz+BPy/e+XyJIN5ZSqs7d5am7Pz2xEhtDJnjd0Z/lzhVt8Dezc5VVv9BoJOacldRXItnHAYBN8G6Upma7Ww=="
+                ]
+            }
+        ],
+        "General-Use Machines (Legacy)": [
+            { 
+                "name": "delta-ubuntu2",
+                "status": "legacy",
+                "specs": {
+                    "cpus": 6,
+                    "ram_gib": 25,
+                    "gpus": [
+                        {
+                            "model": "NVIDIA GeForce RTX 2080 Ti",
+                            "vram_mib": 11264
+                        },
+                        {
+                            "model": "NVIDIA GeForce RTX 2080 Ti",
+                            "vram_mib": 11264
+                        }
+                    ],
+                    "quota": {
+                        "node-local_disk": [
+                            {
+                                "name": "docker",
+                                "mount_point": "/var/lib/cluster",
+                                "f5_type": "xfs",
+                                "size_limit": [
+                                    {
+                                        "name": "soft",
+                                        "size": 15
+                                    },
+                                    {
+                                        "name": "hard",
+                                        "size": 30
+                                    }
+                                ],
+                                "inode_limit": [
+                                    {
+                                        "name": "soft",
+                                        "size": "unlimited"
+                                    },
+                                    {
+                                        "name": "hard",
+                                        "size": "unlimited"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "scratch",
+                                "mount_point": "/mnt/scratch",
+                                "f5_type": "xfs",
+                                "size_limit": [
+                                    {
+                                        "name": "soft",
+                                        "size": 2
+                                    },
+                                    {
+                                        "name": "hard",
+                                        "size": 200
+                                    }
+                                ],
+                                "inode_limit": [
+                                    {
+                                        "name": "soft",
+                                        "size": "unlimited"
+                                    },
+                                    {
+                                        "name": "hard",
+                                        "size": "unlimited"
+                                    }
+                                ]
+                            }
+                        ],
+                        "cpu_percent": 100,
+                        "memory_byte": 204
+                    },
+                    "hostnames": [
+                        "delta-ubuntu2.ext.watonomous.ca",
+                        "delta-ubuntu2.cluster.watonomous.ca"
+                    ],
+                    "os": "Ubuntu 22.04.3 LTS",
+                    "cpu": "Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz",
+                    "logical_processors": 6,
+                    "ssh_host_keys": {
+                        "ssh-dss": "AAAAB3NzaC1kc3MAAACBALAe1/2IaCdAx0OKJOcUplFcAQAoHfljMtqGFROawRX8hEu5UrNRU8tUgKytcaZIWLOqf4n1s0Epet1/QF50qd22Z2C1/UAUDR8mKJfyXpIxv8iV7hI2VCkHUd75pjHsqiZ8TyUqCX9hEbvA/HJWKNi+3O/5gstZUSW4A5ZjPS9rAAAAFQDZR2bNIWRL7P4vFkbg/G8wcrfunwAAAIEAmbdxcW3KP8UEHCU0eylqQCv+MxdeprVC4Q7M0NKFJU9UXYSzpZpNF2hAzHwOQUCHa0dP1UMYlbHlAz5EUrkjb6mDmIAvYd8muD03JH31gVDUQ9H1XACSFrWuLBa+47CzqgUp9S3ekULjyVoYQjuSz8GA3hYSHtraxqFyvY1hR3cAAACAE6jCYIKT4i8WjzCyHuh3Hn70g4f7Ozg3peW/7rE9PA8fv3isblRrxbwCEUyjdNZH0FLGkZ37ZR6ASU7Dy4mj3jmRh+n7cBhiRJ3/cQ/CPABwKvOOvNiMt0pfF76CyZPawsJOfyzpUB0ZZH6s87uyUhSuT4ZTl9aHiTyKSeRNDb0=",
+                        "ecdsa-sha2-nistp256": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMGR2KF2E+MmWB9PO36mxeYtUFrYkxPCdN31kkm3vUNdoS0XF223QMSszbFFYeXsAIVRjcqbAmQrsBw3AaieMX0=",
+                        "ssh-ed25519": "AAAAC3NzaC1lZDI1NTE5AAAAIE26K/GoQWnwFpu25UBJaW29sTVc0Dzf2TVsSEx7cf7D",
+                        "ssh-rsa": "AAAAB3NzaC1yc2EAAAADAQABAAACAQCsIMiUoG9+2vwLrfDpzZZVpYONZEy7FqjHS6oz/LCrVNVBMbaugHYkZgguwRw4VSWi1NUee8Gjb5RoW6394Jh5OZsGkTwroE86qta5IoNEYwzhHxIEJzkGEE3m9XK8zRz5jejqb5r6sTbvxNSNgj0rwPq9T7qv0ZNDJibIMQnMH9etO5hrGDk4LRN+ZRjPe/prAG6xsd/DV7Wth7MPJJGNCsUoWkfZ3CKSrv4DVuj/1dYns9KfbkpUNLGGnrIsiLOfq7JxNVbOxg728kQS38AuafWJLlffNiFkRbN+uz7W4NfQUjBsG+rkay82gt6FP6+4c+91+WljCdcYqCvsCN4OtA2QGQxBvi1bNjb+cwbUx4T3Id4w9tQJoDxtNTnhUj5K+ux3noAa2pRXl90BJeWg30KOW8UbiV3xc1BNmIEtjADmfib2oSoUYa5ITWsupJglxcrWQaoR1tb1ckUTIi2Y82eb5sLgOoD9yl6ahF5d5FAIMGwxtjGAqVsNpfohNQCzoaizvTckqYaz8URFGvwzKpQjDlMNebk3g04SQApXAanCXf5tMdcIygenGseQsgvwVIg09uYdtEz/sORlXKFEpkxS7DuaqYzEpeiNMeiwKEzQT7Clwbkhy7L0IlIDPQ1XbnrTtqlPYP7AXv9bxs3HEx4/T4DoLZTK+6rTb7EVpw=="
+                    }
+                }
+            },
+            {
+                "name": "derek3-ubuntu2",
+                "status": "legacy",
+                "specs": {
+                    "cpus": 3,
+                    "ram_gib": 8,
+                    "quota": {
+                        "node-local_disk": [
+                            {
+                                "name": "docker",
+                                "mount_point": "/var/lib/cluster",
+                                "f5_type": "xfs",
+                                "size_limit": [
+                                    {
+                                        "name": "soft",
+                                        "size": 10
+                                    },
+                                    {
+                                        "name": "hard",
+                                        "size": 20
+                                    }
+                                ],
+                                "inode_limit": [
+                                    {
+                                        "name": "soft",
+                                        "size": "unlimited"
+                                    },
+                                    {
+                                        "name": "hard",
+                                        "size": "unlimited"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "scratch",
+                                "mount_point": "/mnt/scratch",
+                                "f5_type": "xfs",
+                                "size_limit": [
+                                    {
+                                        "name": "soft",
+                                        "size": 2
+                                    },
+                                    {
+                                        "name": "hard",
+                                        "size": 200
+                                    }
+                                ],
+                                "inode_limit": [
+                                    {
+                                        "name": "soft",
+                                        "size": "unlimited"
+                                    },
+                                    {
+                                        "name": "hard",
+                                        "size": "unlimited"
+                                    }
+                                ]
+                            }
+                        ],
+                        "cpu_percent": 100,
+                        "memory_byte": 2048
+                    },
+                    "hostnames": [
+                        "derek3-ubuntu2.cluster.watonomous.ca",
+                        "derek3-ubuntu2.ts.watonomous.ca"
+                    ],
+                    "os": "Ubuntu 22.04.5 LTS",
+                    "cpu": "Intel(R) Xeon(R) CPU E3-1225 v3 @ 3.20GHz",
+                    "logical_processors": 3,
+                    "ssh_host_keys": {
+                        "ssh-dss": "AAAAB3NzaC1kc3MAAACBAP1PEgGYDvo/sGTNSnZZKE4SRSJYGBGquQGjMAFDMBswuk60gUWhHFLRg8x90ANlltG3FKnoiAgj2D5Zth3D9I5JdEatUhI3qms+QtMyjpQ25nKggnbussLA6731S387NKFDtDNZwriuZAdn9riwtN5E/L2bXxv5mvARtXoU9RMZAAAAFQDL/gopZhgAHD64H6K1Zs2sFN466wAAAIEA1+JqJ+aRyrlLIcY7/xkGmuEwsZWiGY1vjyManP01dhw7+vbN4/RYrCvI5+gtYPKEPZZJc5tHObA29ozffxyYXtNXqnOiMiVgL18l+/uRcXDfW6XeW19Jms5TfqW6QaUzP1Eov3Q9P3d8B8Sv/BP0tcBnsuwMPNXKf/9FPApX8hwAAACABNpBKS3TydFzB+7vzXR1AVAVjNOS7QX7sm63btOL101U802dTTvrH1mKoENi/r6xMbN5/262s1YNEPigzOZzSHQMMoJrCrZl03Qgg5U2+k9OqDuJ8EdSaE0eHgXTKx6cVzN4EI5dD/fj/aBb2razI8eFYqCuA4YcZjfzJZy8fHg=",
+                        "ecdsa-sha2-nistp256": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJfEfN9sMITqLfH8br6bJhm8zeSdnkFQOkLsiGKyS1v5W2RXom/PxHHPw/PErDSguLMFos+M6ygQqgS/ZU3YQK8=",
+                        "ssh-ed25519": "AAAAC3NzaC1lZDI1NTE5AAAAINmiaypvkgNuU87kGH/R1tVPevkOg99J/THCBkqUo+eg",
+                        "ssh-rsa": "AAAAB3NzaC1yc2EAAAADAQABAAACAQCpjWFahPzr5EDA72B5HyGr6yHMAHY7ZMqhKha6klScPT2EpMy8CAXU6N5jBLZ+/CD6l0mtmApjZF92BJPzj2dAhKKUqFCOOKRKpFiAn113oDxn6wlZxxdRCVJ+RUNZX/QTEmlbRq9Xgu9XXYKdzDtGOC+SVfP4/ttyCsd8fHqdR8TIUNTs5XCbAmdguFg6EkTUU8Oqk7fmLaAtmuWvsJFaZZre/+HQWtNHog2G8l/mdKzDj11IiIAEZUbXyfjxEZLovhrSrSLsGjmv3dxL4SFw8C354/OuF2KQUg3sXl1c49H+IYu39kQQJQpaMJlNML+H2ns/huU9+NTwkEvzV4TBmcm3PDlGp7pM5JkqJI3MMq5OZfD3YQ5KIztZSey10RsU+LQ5hi1oD5ecnK7URF5BhH79myJk8MetBlX77PASSYNbgPlm7IC+X9VHbiWM9jr+nUBf4OW/BtOwmVp95WmYuS/i4C0aCgYotaXxilUuVKkL5djoIrF/inWyKoYh1DIjBSIHxfmQuaoyHP06NhBWuaNAqOkkomCBQ6s8xO77DpO//Ny8I5lOIzKqabLv5rIO5V704NLCGTDBpUd/v8lnMFdCHQ/fVqEC6cm7jPeCA5M+CDf4Gr5FeHIlb6M1lkGGn00OJFQfBc2YRU0pkiwkOBpqF2HsAFdKppNgHiQjDQ=="
+                    }
+                }
+            },
+            {
+                "name": "tr-ubuntu3",
+                "status": "legacy",
+                "specs": {
+                    "cpus": 4,
+                    "ram_gib": 16,
+                    "gpus": []
+                },
+                "hostnames": [
+                    "tr-ubuntu3.cluster.watonomous.ca",
+                    "tr-ubuntu3.ts.watonomous.ca"
+                ],
+                "os": "Ubuntu 22.04.4 LTS",
+                "cpu": "AMD Ryzen Threadripper 3970X 32-Core Processor",
+                "logical_processors": 4,
+                "ssh_host_keys": {
+                    "ssh-dss": "AAAAB3NzaC1kc3MAAACBALI/JJGxqxLbVMGiAvVBTUXRcMpdt4cQH6PFX8fGnDgW5YruYMOmx7x8+VEgErvaI/+UlsrFwseEQ09WcVSFAyd7uHO2HQPSydponvC4BvnVTsavfRk1hRzCl57ti2u9sohnycejgtRHcaCra1/RLF70EDR5fYXXNLN6lHthVX0JAAAAFQDvdBc+BFnVuHrMCu3XSjiAMpU3JQAAAIBT94LMoiCL0TBqTh9egU8PC+5OHvy/IzwJwFxtXo36uWUWVFTlKfYUI3+UETftTcvv3FHN7C1eQLLPX6uaxmTs6vexCaH051HaXo4l82cslKQig3bvgGr54by7EkEIUYNT6H+WO6a6uPHaLUrN8WSif/5L//bMAtD2KyVspZ+IHAAAAIEApGf2JqOcvIL7c9hPY6Yb0wbjiVJm3Eq/0fsYLq/S/EetYGbm2YnBvI3RTwDueeuRAF7jljUo1rdmEWY7hkj1iA22Ac2Z7XPK6R6BSVHUdIU9l+nXieX1ID2bTdEElKX3HFpqJUnP4zOYBVQ3OJtKZ9XUwk3X+yyzDCHH4/Lp8Ck=",
+                    "ecdsa-sha2-nistp256": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPTQC178W+ak9G8+DzuKfJbETyotv8tzb0N5YZJpt80oVFaR4U67+6K6HpdXXBE6iYZttUklvAvVuRBo0p3QEwg=",
+                    "ssh-ed25519": "AAAAC3NzaC1lZDI1NTE5AAAAIFb/1ZorJohUSwTkOA73cdzZRjvwgwsOWf3W5jhCEzzZ",
+                    "ssh-rsa": "AAAAB3NzaC1yc2EAAAADAQABAAACAQCUVrTMGnspw/0GrW5e9yuGQwXv1Vktb/CJHMR2pIhWfJQpne+u7w2uD0Y46OeH+HfK1GQpMnDlgQFKK0WbXwn5G+kUqiLNEijw4O1vQvf1Gpojp6Lz6HapgNSxRgJjfTdQNhI+6WFM2zlRe8NQHmg1V7IaLywH2a7XjCFfBYkyEX0U4iJy/PSMSm/uXbniJH40Nr8vg6yEh3g84Hz8DU+j5YxbRdqeEWR+Du98jkQFfgrc+zthGa14uWI+yAXNU4DGgMU1hH9UH7lW3i+AnMZaGvOnptsSgVrCTQEcWZ93hdLnB29TylhpVnpdWM2PPjhVqmEZucZo5afk4++eBcey5yT6Qua6hFh3oKcGTajVZxjb1jEabBVTZkJJOlwKwcj7rURii7IfeIV+FQYYH9w1tTPypxAl4WDsfPy4qswZpVXa9BTJRibQ8cuuCu/M+Bi3Dd4zhj/s0G0jXmybCbB8VrY2EXj9YfC0gBBQSMUoymkttP3iq+/LUOB8cC5rX/0JlQG2giW/9XY1Rf1g7RjScZ5aYVtVSvnKFnZVcy3uD8a6R4dFIf/2G6E2xoFQOureUOaNPnpk/2k0F1q8m+1hSm7SI+Ri0bZRmFr3HnxZH5XfAKUQfp9dFnbCiTjDGWZUkEDRH43bhUkjluS6C5wqycS+Plf+pp2RZfy5DOE1Kw=="
+                },
+                "quota": {
+                    "node-local_disk": [
+                        {
+                            "name": "docker",
+                            "mount_point": "/var/lib/cluster",
+                            "f5_type": "xfs",
+                            "size_limit": [
+                                {
+                                    "name": "soft",
+                                    "size": 10
+                                },
+                                {
+                                    "name": "hard",
+                                    "size": 20
+                                }
+                            ],
+                            "inode_limit": [
+                                {
+                                    "name": "soft",
+                                    "size": "unlimited"
+                                },
+                                {
+                                    "name": "hard",
+                                    "size": "unlimited"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "scratch",
+                            "mount_point": "/mnt/scratch",
+                            "f5_type": "xfs",
+                            "size_limit": [
+                                {
+                                    "name": "soft",
+                                    "size": 2
+                                },
+                                {
+                                    "name": "hard",
+                                    "size": 200
+                                }
+                            ],
+                            "inode_limit": [
+                                {
+                                    "name": "soft",
+                                    "size": "unlimited"
+                                },
+                                {
+                                    "name": "hard",
+                                    "size": "unlimited"
+                                }
+                            ]
+                        }
+                    ],
+                    "cpu_percent": 100,
+                    "memory_byte": 2048
+                }
+            }
+        ]
+    }
+}
