@@ -1,5 +1,5 @@
 import argparse
-from .commands import status, quota, maintaince  # Adjust imports as needed
+from .commands import status, quota, maintaince, daemon  # Adjust imports as needed
 
 def main():
     parser = argparse.ArgumentParser(
@@ -26,9 +26,24 @@ def main():
     
     # quota disk
     disk_parser = quota_subparsers.add_parser("disk", help="returns the disk status")
-    disk_parser.add_argument("disk", help="Node to mark under maintenance")
     disk_parser.set_defaults(func=quota.check_disk_usage)
-    quota_args = parser.parse_args()
+
+    # quota cpu
+    disk_parser = quota_subparsers.add_parser("cpu", help="returns the cpu status")
+    disk_parser.set_defaults(func=quota.check_cpu_usage)
+
+    # quota memory
+    disk_parser = quota_subparsers.add_parser("memory", help="returns the memory status")
+    disk_parser.set_defaults(func=quota.check_memory_usage)
+
+    # deamon command
+    daemon_parser = subparsers.add_parser("daemon", help="Manage daemon")
+    daemon_subparsers = daemon_parser.add_subparsers(dest="subcommand", required=True)
+
+    # deamon list
+    daemon_list_parser = daemon_subparsers.add_parser("status", help="lists all deamon usage")
+    daemon_list_parser.set_defaults(func=daemon.print_daemon_status)
+
 
     # Maintenance command
     maintaince_parser = subparsers.add_parser("maintenance", help="Manage maintenance status")
@@ -49,10 +64,9 @@ def main():
     remove_parser = maintaince_subparsers.add_parser("check", help="check maintenance status")
     remove_parser.add_argument("node_name", help="Node to check maintenance from")
     remove_parser.set_defaults(func=maintaince.print_under_maintenance)
-    maintaince_args = parser.parse_args()
+    args = parser.parse_args()
 
     # Call the function associated with the chosen command
-    args = quota_args + maintaince_args
 
     if hasattr(args, "func"):
         if "subcommand" in args:

@@ -1,70 +1,73 @@
 import json
 import shutil
-import subprocess
 import psutil
+import math
+from colorama import init, Fore
 
 # Configuration
 DEFAULT_LIMIT_GI = 20  # Default quota limit in GiB
 DUE_DATE_FILE_NAME = "soft_threshold_due.txt"
 DATA_DIR = "watcloud/data"
 
+init(autoreset=True)
+
 with open('watcloud/data/cluster_info.json') as f:
     data = json.load(f)
 
-def check_disk_usage(path="/"):
+def check_disk_usage():
     """Check disk usage for the given path (default root)."""
-    total, used, free = shutil.disk_usage(path)
-    usage_percent = used / total * 100
-    return {
-        "total_gb": total / (1024**3),
-        "used_gb": used / (1024**3),
-        "free_gb": free / (1024**3),
-        "usage_percent": usage_percent
-    }
+    total, used, free = shutil.disk_usage("/")
+    usage_percent = math.ceil(used / total * 100)
+    print(f"Total: {round(total / (1024**3), 2)} GiB\nUsed: {round(used / (1024**3), 2)} GiB\nFree: {round(free / (1024**3), 2)} GiB\nUsed Percentage: ", end = "")
 
-def check_cpu_usage(interval=1):
+    if usage_percent <= 70:
+        print(f"{Fore.GREEN}{usage_percent}%")
+    elif usage_percent >= 90:
+        print(f"{Fore.RED}{usage_percent}%")
+    else:
+        print(f"{Fore.YELLOW}{usage_percent}")
+
+def check_cpu_usage():
     """
     Check CPU usage percentage over the given interval (seconds).
     """
-    usage_percent = psutil.cpu_percent(interval=interval)
-    return usage_percent
+
+    usage_percent = round(psutil.cpu_percent(interval= 1.0))
+    print(f"Usage Percentage: ", end="")
+
+    if usage_percent < 50:
+        print(f"{Fore.GREEN}{usage_percent}%")
+    elif usage_percent <= 70:
+        print(f"{Fore.YELLOW}{usage_percent}%")
+    else:
+        print(f"{Fore.RED}{usage_percent}%")
+    
 
 def check_memory_usage():
     """Check system memory usage."""
     mem = psutil.virtual_memory()
-    return {
-        "total_gb": mem.total / (1024**3),
-        "used_gb": mem.used / (1024**3),
-        "free_gb": mem.available / (1024**3),
-        "usage_percent": mem.percent
-    }
+
+    print(f"Total: {round(mem.total / (1024**3), 2)} GiB\nUsed: {round(mem.used / (1024**3), 2)} GiB\nFree: {round(mem.available / (1024**3), 2)} GiB\nUsed Percentage: ", end = "")
+    usage_percent = round(mem.percent)
+
+    if usage_percent <= 60:
+        print(f"{Fore.GREEN}{usage_percent}%")
+    elif usage_percent >= 80:
+        print(f"{Fore.RED}{usage_percent}%")
+    else:
+        print(f"{Fore.YELLOW}{usage_percent}%")
+
 
 
 def list_quota_usage():
-    nodes = (
-          data["cluster"]["compute_nodes"]
-        + data["cluster"]["login_nodes"]
-        + data["cluster"]["General-Use Machines (Legacy)"]
-    )
+    print("Disk Usage:")
+    print("-" * 20)
+    check_disk_usage()
 
-    print(f"{'Node':<20} {'Disk':<10} {'Used (GiB)':<12} {'Soft Limit':<12} {'Hard Limit':<12}")
-    print("-" * 70)
+    print("\nCPU Usage:")
+    print("-" * 20)
+    check_cpu_usage()
 
-    for node in nodes:
-        node_name = node["name"]
-        disks = node.get("specs", {}).get("quota", {}).get("node-local_disk", [])
-
-        for disk in disks:
-            disk_name = disk.get("name", "unknown")
-
-            soft_limit = next((limit["size"] for limit in disk.get("size_limit", []) if limit["name"] == "soft"), "N/A")
-            hard_limit = next((limit["size"] for limit in disk.get("size_limit", []) if limit["name"] == "hard"), "N/A")
-
-            try:
-                total, used, _ = shutil.disk_usage(node_name)
-                used_gib = used / (1024 ** 3)
-                used_str = f"{used_gib:.2f}"
-            except Exception:
-                used_str = "N/A"
-
-            print(f"{node_name:<20} {disk_name:<10} {used_str:<12} {soft_limit:<12} {hard_limit:<12}")
+    print("\nMemory Usage:")
+    print("-" * 20)
+    check_memory_usage()

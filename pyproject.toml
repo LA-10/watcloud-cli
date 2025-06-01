@@ -9,6 +9,10 @@ packages = ["watcloud"]
 name = "watcloud"
 version = "0.1"
 description = "CLI tool for quota and cluster info and daemon"
+dependencies = [
+    "psutil",
+    "colorama"
+]
 
 [project.scripts]
 watcloud = "watcloud.cli:main"
