@@ -1,4 +1,13 @@
-include
-lib
-__pycache__
-venv
+# Python virtual environment
+venv/
+include/
+lib/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Egg metadata (safe to ignore if not needed for packaging)
+watcloud.egg-info/
+
