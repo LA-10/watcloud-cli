@@ -1,4 +1,4 @@
-bin
 include
 lib
 __pycache__
+venv

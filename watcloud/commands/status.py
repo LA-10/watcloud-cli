@@ -1,34 +1,20 @@
-import shutil
 import subprocess
 from .quota import data
+import concurrent.futures
 
-def nodes_status(nodes): 
-    '''Pings all possible nodes and returns 1 if the node is online, and 0 otherwise'''
-    nodes_stat = []
-
-    for node in nodes:
-        res = ping(node)
-
-        nodes_stat.append(res)
-
-
-
-    return nodes_stat
     
-
 def ping(host):
     '''Pings a one host at a time'''
     # Define the command and arguments
-    command = ['ping', '-c', '4', host]
+    command = ['ping', '-c', '2', host]
+    
     
     # Execute the command and capture the output
     result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
 
-    if result.returncode == 0:
-       return 1
-    else:
-        return 0
+    return result.returncode == 0
+
 
 
 def get_status(status):
@@ -41,16 +27,31 @@ def get_status(status):
 def get_cluster_status():
     '''Displays the summary of the status of all subprocesses'''
     from .maintaince import is_under_maintenance
+    
+    def check_node_status(node):
+            name = node["name"]
+            hostnames = node.get("hostnames", [])
+            if not hostnames:
+                return f"{name.center(name_width)}{spacer}{'❓ No Hostname'.center(status_width)}"
 
-    terminal_width = shutil.get_terminal_size().columns
+            if is_under_maintenance(name):
+                status = "🛠️ Maintenance"
+            else:
+                is_running = ping(hostnames[0])
+                status = get_status(is_running)
+
+            return (
+                f"{name.center(name_width)}{spacer}"
+                f"{status.center(status_width)}"
+            )
+
     clusters = ["compute_nodes", "login_nodes", "General-Use Machines (Legacy)"]
 
-    # Define fixed column widths
-    name_width = 15
-    hostname_width = 30
-    status_width = 20
 
-    total_width = name_width + hostname_width + status_width + 6  
+    # Fixed column widths
+    name_width = 15
+    status_width = 20
+    total_width = name_width + status_width + 6  
     spacer = " " * 2
 
     for cluster in clusters:
@@ -60,7 +61,6 @@ def get_cluster_status():
         # Header
         header = (
             f"{'Node'.center(name_width)}{spacer}"
-            f"{'Hostname'.center(hostname_width)}{spacer}"
             f"{'Status'.center(status_width)}"
         )
         print(header)
@@ -68,20 +68,9 @@ def get_cluster_status():
 
         nodes = data["cluster"].get(cluster, [])
 
-        for node in nodes:
-            name = node["name"]
-            hostnames = node.get("hostnames", [])
+        
 
-            for hostname in hostnames:
-                if is_under_maintenance(name):
-                    status = "🛠️ Maintenance"
-                else:
-                    is_running = ping(hostname)
-                    status = get_status(is_running)
-
-                row = (
-                    f"{name.center(name_width)}{spacer}"
-                    f"{hostname.center(hostname_width)}{spacer}"
-                    f"{status.center(status_width)}"
-                )
-                print(row)
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = [executor.submit(check_node_status, node) for node in nodes]
+            for future in concurrent.futures.as_completed(futures):
+                print(future.result())

@@ -3,6 +3,7 @@ import shutil
 import psutil
 import math
 from colorama import init, Fore
+import concurrent.futures
 
 # Configuration
 DEFAULT_LIMIT_GI = 20  # Default quota limit in GiB
@@ -18,6 +19,10 @@ def check_disk_usage():
     """Check disk usage for the given path (default root)."""
     total, used, free = shutil.disk_usage("/")
     usage_percent = math.ceil(used / total * 100)
+
+    print("\nDisk Usage:")
+    print("-" * 20)
+
     print(f"Total: {round(total / (1024**3), 2)} GiB\nUsed: {round(used / (1024**3), 2)} GiB\nFree: {round(free / (1024**3), 2)} GiB\nUsed Percentage: ", end = "")
 
     if usage_percent <= 70:
@@ -33,6 +38,10 @@ def check_cpu_usage():
     """
 
     usage_percent = round(psutil.cpu_percent(interval= 1.0))
+
+    print("\nCPU Usage:")
+    print("-" * 20)
+
     print(f"Usage Percentage: ", end="")
 
     if usage_percent < 50:
@@ -45,7 +54,11 @@ def check_cpu_usage():
 
 def check_memory_usage():
     """Check system memory usage."""
+    
     mem = psutil.virtual_memory()
+
+    print("\nMemory Usage:")
+    print("-" * 20)
 
     print(f"Total: {round(mem.total / (1024**3), 2)} GiB\nUsed: {round(mem.used / (1024**3), 2)} GiB\nFree: {round(mem.available / (1024**3), 2)} GiB\nUsed Percentage: ", end = "")
     usage_percent = round(mem.percent)
@@ -60,14 +73,15 @@ def check_memory_usage():
 
 
 def list_quota_usage():
-    print("Disk Usage:")
-    print("-" * 20)
-    check_disk_usage()
+    functions = [check_disk_usage, check_cpu_usage, check_memory_usage]
 
-    print("\nCPU Usage:")
-    print("-" * 20)
-    check_cpu_usage()
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = {executor.submit(function): function.__name__ for function in functions}
 
-    print("\nMemory Usage:")
-    print("-" * 20)
-    check_memory_usage()
+        for future in concurrent.futures.as_completed(futures):
+            check_name = futures[future]
+            try:
+                future.result()  
+            except Exception as e:
+                print(f"{Fore.RED}❌ Error running {check_name}: {e}")
+

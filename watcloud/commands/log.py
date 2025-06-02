@@ -4,6 +4,8 @@ import os
 # Path to the log file
 LOG_PATH = "watcloud/data/log.json"
 
+# Initalizing colorma
+
 # Load the log file into a dictionary
 def load_log():
     if not os.path.exists(LOG_PATH):
@@ -16,7 +18,7 @@ def load_log():
 
 # Save the log dictionary to the file
 def save_log(log_data):
-    print(log_data)
+
     with open(LOG_PATH, 'w') as f:
         json.dump(log_data, f, indent=2)
 
@@ -54,7 +56,7 @@ def set_node_status(node_name, status, note=None):
             log_data[node_name]['note'] = note
         save_log(log_data)
     except KeyError:
-       print(f"Key '{node_name}' not found in log.json.")
+       add_node(node_name, status, note)
 
 # Optionally remove a node from the log
 def remove_node(node_name):

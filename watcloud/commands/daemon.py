@@ -1,9 +1,18 @@
 import psutil
-import os
 from colorama import init, Fore
+import getpass
+import sys
 
 def get_user_daemon_processes():
-    user = os.getlogin()
+    def get_current_user():
+        try:
+            return getpass.getuser()
+        except Exception as e:
+            print(f"{Fore.RED}❌ ERROR: Unable to determine current user: {e}")
+            print(f"{Fore.YELLOW}➡️ Please set the USER or LOGNAME environment variable.")
+            sys.exit(1)
+    
+    user = get_current_user()
     daemons = []
 
     for proc in psutil.process_iter(['pid', 'name', 'username', 'cmdline', 'terminal']):

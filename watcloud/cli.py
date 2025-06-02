@@ -1,10 +1,11 @@
 import argparse
-from .commands import status, quota, maintaince, daemon  # Adjust imports as needed
+from .commands import status, quota, maintaince, daemon  
 
 def main():
     parser = argparse.ArgumentParser(
         description="WatCloud CLI - Manage your cloud cluster"
     )
+    
     subparsers = parser.add_subparsers(
         title="Commands",
         dest="command",
@@ -40,10 +41,9 @@ def main():
     daemon_parser = subparsers.add_parser("daemon", help="Manage daemon")
     daemon_subparsers = daemon_parser.add_subparsers(dest="subcommand", required=True)
 
-    # deamon list
+    # deamon status
     daemon_list_parser = daemon_subparsers.add_parser("status", help="lists all deamon usage")
     daemon_list_parser.set_defaults(func=daemon.print_daemon_status)
-
 
     # Maintenance command
     maintaince_parser = subparsers.add_parser("maintenance", help="Manage maintenance status")
@@ -52,7 +52,7 @@ def main():
     # maintenance mark
     mark_parser = maintaince_subparsers.add_parser("mark", help="Mark node under maintenance")
     mark_parser.add_argument("node_name", help="Node to mark under maintenance")
-    mark_parser.add_argument("--until", help="Maintenance end time (optional)")
+    mark_parser.add_argument("--note", help="Maintenance notes (optional)", required=False)
     mark_parser.set_defaults(func=maintaince.mark_maintenance)
 
     # maintenance remove
@@ -66,7 +66,6 @@ def main():
     remove_parser.set_defaults(func=maintaince.print_under_maintenance)
     args = parser.parse_args()
 
-    # Call the function associated with the chosen command
 
     if hasattr(args, "func"):
         if "subcommand" in args:
